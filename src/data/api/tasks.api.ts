@@ -18,7 +18,7 @@ export async function getTasks() {
 
 export async function createTask(data: CreateTask) {
   try {
-    const res = await apiClient.post<Task[]>(`${TASKS_BASEURL}/tasks/`, data);
+    const res = await apiClient.post<Task>(`${TASKS_BASEURL}/tasks/`, data);
 
     console.log("[tasks.api.createTask] data: ", res.data);
 
