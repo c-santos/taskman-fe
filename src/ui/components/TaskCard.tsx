@@ -2,13 +2,7 @@
 
 import type { Task } from "@/types/task.type";
 import { formatDate } from "@/utils/formatDate";
-import {
-  Card,
-  Checkbox,
-  Flex,
-  Heading,
-  Text,
-} from "@radix-ui/themes";
+import { Card, Checkbox, Flex, Heading, Text } from "@radix-ui/themes";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -27,6 +21,9 @@ export function TaskCard(props: TaskCardProps) {
         <Flex direction={"column"} flexGrow={"1"} style={{ cursor: "pointer" }}>
           <Flex direction={"row"} justify={"between"}>
             <Heading size={"3"}>{task.title}</Heading>
+            <Text color="gray" size={"2"}>
+              Due date: {task.due_date ? formatDate(task.due_date) : "None"}
+            </Text>
           </Flex>
 
           <Flex direction={"row"} justify={"between"}>
@@ -34,7 +31,7 @@ export function TaskCard(props: TaskCardProps) {
               {task.description}
             </Text>
             <Text color="gray" size={"2"}>
-              {formatDate(task.updated_at)}
+              Last edited at: {formatDate(task.updated_at)}
             </Text>
           </Flex>
         </Flex>
@@ -46,11 +43,10 @@ export function TaskCard(props: TaskCardProps) {
           px={"2"}
         >
           <Checkbox
+            variant="soft"
             size={"3"}
             style={{ cursor: "pointer" }}
-            onCheckedChange={() => {
-              setChecked(!checked);
-            }}
+            contentEditable={false}
             checked={checked}
           />
         </Flex>
