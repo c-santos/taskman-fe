@@ -44,7 +44,7 @@ export async function createTask(data: CreateTask) {
 
 export async function updateTask(taskId: string, data: UpdateTask) {
   try {
-    const res = await apiClient.patch<Task[]>(
+    const res = await apiClient.patch<Task>(
       `${TASKS_BASEURL}/tasks/${taskId}`,
       data,
     );
@@ -54,6 +54,21 @@ export async function updateTask(taskId: string, data: UpdateTask) {
     return res.data;
   } catch (error) {
     console.error("[tasks.api.updateTask] error: ", error);
+    throw error;
+  }
+}
+
+export async function deleteTask(taskId: string) {
+  try {
+    const res = await apiClient.delete<Task>(
+      `${TASKS_BASEURL}/tasks/${taskId}`,
+    );
+
+    console.log("[tasks.api.deleteTask] data: ", res.data);
+
+    return res.data;
+  } catch (error) {
+    console.error("[tasks.api.deleteTask] error: ", error);
     throw error;
   }
 }
