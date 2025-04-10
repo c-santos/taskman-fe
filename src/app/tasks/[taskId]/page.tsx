@@ -1,8 +1,18 @@
 "use client";
 
+import { queryClient } from "@/data/api/query-client";
 import { useOneTask } from "@/hooks/useOneTask";
+import { useUpdateTask } from "@/hooks/useUpdateTask";
 import { formatDate } from "@/utils/formatDate";
-import { Box, Container, DataList, Heading } from "@radix-ui/themes";
+import {
+  Box,
+  Button,
+  Checkbox,
+  Container,
+  DataList,
+  Flex,
+  Heading,
+} from "@radix-ui/themes";
 import { useParams } from "next/navigation";
 
 export default function TaskDetail() {
@@ -15,6 +25,8 @@ export default function TaskDetail() {
     isError,
   } = useOneTask(taskId as string);
 
+  const updateTaskMutation = useUpdateTask(taskId as string);
+
   if (isLoading) {
     return <p>Loading...</p>;
   }
@@ -23,12 +35,41 @@ export default function TaskDetail() {
     return <p>An error occured.</p>;
   }
 
+  const handleUpdateTaskStatus = (status: boolean) => {
+    updateTaskMutation.mutateAsync(
+      {
+        completed: status,
+        completed_at: new Date(),
+      },
+      {
+        onSuccess: () =>
+          queryClient.invalidateQueries({
+            queryKey: ["task", taskId as string],
+          }),
+      },
+    );
+  };
 
   if (isSuccess) {
     return (
       <Container>
-        <Heading size={"4"}>Task #{task.id}</Heading>
-        <Heading size={"9"}>{task.title}</Heading>
+        <Flex gap={"2"}>
+          <Button variant="outline">Edit</Button>
+          <Button color="red">Delete</Button>
+        </Flex>
+        <Flex direction={"column"} my={"5"}>
+          <Heading size={"4"}>Task #{task.id}</Heading>
+          <Flex align="center" gap={"4"}>
+            <Checkbox
+              size={"3"}
+              variant="surface"
+              onCheckedChange={(checked) =>
+                handleUpdateTaskStatus(checked as boolean)
+              }
+            />
+            <Heading size={"9"}>{task.title}</Heading>
+          </Flex>
+        </Flex>
         <Box>
           <DataList.Root>
             <DataList.Item>
