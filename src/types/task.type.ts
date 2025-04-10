@@ -12,3 +12,8 @@ export type Task = {
 };
 
 export type CreateTask = Pick<Task, "title" | "description" | "due_date">;
+
+export type UpdateTask = Pick<
+  Task,
+  "title" | "description" | "due_date" | "completed" | "completed_at"
+>;
