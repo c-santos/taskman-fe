@@ -2,7 +2,14 @@
 
 import type { Task } from "@/types/task.type";
 import { formatDate } from "@/utils/formatDate";
-import { Card, Checkbox, Flex, Heading, Text } from "@radix-ui/themes";
+import {
+  Card,
+  Checkbox,
+  Flex,
+  Heading,
+  Text,
+} from "@radix-ui/themes";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 type TaskCardProps = {
@@ -12,9 +19,10 @@ type TaskCardProps = {
 export function TaskCard(props: TaskCardProps) {
   const { task } = props;
   const [checked, setChecked] = useState(task.completed);
+  const router = useRouter();
 
   return (
-    <Card>
+    <Card onClick={() => router.push(`/tasks/${task.id}`)}>
       <Flex direction={"row"} justify={"between"} align={"stretch"}>
         <Flex direction={"column"} flexGrow={"1"} style={{ cursor: "pointer" }}>
           <Flex direction={"row"} justify={"between"}>

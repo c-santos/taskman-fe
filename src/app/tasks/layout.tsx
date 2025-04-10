@@ -1,3 +1,5 @@
+"use client";
+
 import { Container } from "@radix-ui/themes";
 
 export default function TasksLayout({
@@ -5,5 +7,5 @@ export default function TasksLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <Container p={'8'}>{children}</Container>;
+  return <Container p={"8"}>{children}</Container>;
 }
