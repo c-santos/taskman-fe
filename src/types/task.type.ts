@@ -13,7 +13,7 @@ export type Task = {
 
 export type CreateTask = Pick<Task, "title" | "description" | "due_date">;
 
-export type UpdateTask = Pick<
+export type UpdateTask = Partial<Pick<
   Task,
   "title" | "description" | "due_date" | "completed" | "completed_at"
->;
+>>;

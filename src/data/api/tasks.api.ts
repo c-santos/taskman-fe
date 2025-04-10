@@ -45,7 +45,7 @@ export async function createTask(data: CreateTask) {
 export async function updateTask(taskId: string, data: UpdateTask) {
   try {
     const res = await apiClient.patch<Task[]>(
-      `${TASKS_BASEURL}/tasks/${taskId}/`,
+      `${TASKS_BASEURL}/tasks/${taskId}`,
       data,
     );
 
