@@ -16,6 +16,19 @@ export async function getTasks() {
   }
 }
 
+export async function getOneTask(taskId: string) {
+  try {
+    const res = await apiClient.get<Task>(`${TASKS_BASEURL}/tasks/${taskId}/`);
+
+    console.log("[tasks.api.getOneTask] data: ", res.data);
+
+    return res.data;
+  } catch (error) {
+    console.error("[tasks.api.getOneTask] error: ", error);
+    throw error;
+  }
+}
+
 export async function createTask(data: CreateTask) {
   try {
     const res = await apiClient.post<Task>(`${TASKS_BASEURL}/tasks/`, data);
@@ -32,7 +45,7 @@ export async function createTask(data: CreateTask) {
 export async function updateTask(taskId: string, data: UpdateTask) {
   try {
     const res = await apiClient.patch<Task[]>(
-      `${TASKS_BASEURL}/tasks/${taskId}`,
+      `${TASKS_BASEURL}/tasks/${taskId}/`,
       data,
     );
 
