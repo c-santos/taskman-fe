@@ -18,7 +18,7 @@ export async function getTasks() {
 
 export async function getOneTask(taskId: string) {
   try {
-    const res = await apiClient.get<Task>(`${TASKS_BASEURL}/tasks/${taskId}/`);
+    const res = await apiClient.get<Task>(`${TASKS_BASEURL}/tasks/${taskId}`);
 
     console.log("[tasks.api.getOneTask] data: ", res.data);
 
