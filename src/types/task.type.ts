@@ -10,3 +10,5 @@ export type Task = {
   created_at: Date;
   updated_at: Date;
 };
+
+export type CreateTask = Pick<Task, "title" | "description" | "due_date">;

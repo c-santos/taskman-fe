@@ -1,4 +1,4 @@
-import type { Task } from "@/types/task.type";
+import type { CreateTask, Task } from "@/types/task.type";
 import { apiClient } from "./api-client";
 
 const TASKS_BASEURL = process.env.NEXT_PUBLIC_API_BASEURL;
@@ -12,6 +12,18 @@ export async function getTasks() {
     return res.data;
   } catch (error) {
     console.error("[tasks.api.getTasks] error: ", error);
+    throw error;
+  }
+}
+export async function createTask(data: CreateTask) {
+  try {
+    const res = await apiClient.post<Task[]>(`${TASKS_BASEURL}/tasks/`, data);
+
+    console.log("[tasks.api.createTask] data: ", res.data);
+
+    return res.data;
+  } catch (error) {
+    console.error("[tasks.api.createTask] error: ", error);
     throw error;
   }
 }
