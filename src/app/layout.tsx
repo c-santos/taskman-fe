@@ -3,7 +3,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import "@radix-ui/themes/styles.css";
-import { Theme } from "@radix-ui/themes";
+import { Heading, Theme } from "@radix-ui/themes";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "@/data/api/query-client";
 
@@ -26,7 +26,10 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <QueryClientProvider client={queryClient}>
-          <Theme>{children}</Theme>
+          <Theme>
+            <Heading size="9">:taskman</Heading>
+            {children}
+          </Theme>
         </QueryClientProvider>
       </body>
     </html>

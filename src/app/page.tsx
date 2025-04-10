@@ -1,17 +1,15 @@
 "use client";
 
 import styles from "./page.module.css";
-import { Heading } from "@radix-ui/themes";
-import { TaskList } from "@/ui/components/TaskList";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
+  const router = useRouter();
+  router.replace("/tasks");
 
   return (
     <div className={styles.page}>
-      <main className={styles.main}>
-        <Heading size={"9"}>:taskman</Heading>
-        <TaskList />
-      </main>
+      <main className={styles.main}></main>
     </div>
   );
 }
