@@ -1,6 +1,7 @@
 "use client";
 
 import { queryClient } from "@/data/api/query-client";
+import { useDeleteTask } from "@/hooks/useDeleteTask";
 import { useOneTask } from "@/hooks/useOneTask";
 import { useUpdateTask } from "@/hooks/useUpdateTask";
 import { formatDate } from "@/utils/formatDate";
@@ -13,10 +14,11 @@ import {
   Flex,
   Heading,
 } from "@radix-ui/themes";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 
 export default function TaskDetail() {
   const { taskId } = useParams();
+  const router = useRouter();
 
   const {
     data: task,
@@ -26,6 +28,7 @@ export default function TaskDetail() {
   } = useOneTask(taskId as string);
 
   const updateTaskMutation = useUpdateTask(taskId as string);
+  const deleteTaskMutation = useDeleteTask();
 
   if (isLoading) {
     return <p>Loading...</p>;
@@ -50,12 +53,20 @@ export default function TaskDetail() {
     );
   };
 
+  const handleDeleteTask = async () => {
+    await deleteTaskMutation.mutateAsync(taskId as string, {
+      onSuccess: () => router.replace("/tasks"),
+    });
+  };
+
   if (isSuccess) {
     return (
       <Container>
         <Flex gap={"2"}>
           <Button variant="outline">Edit</Button>
-          <Button color="red">Delete</Button>
+          <Button color="red" onClick={handleDeleteTask}>
+            Delete
+          </Button>
         </Flex>
         <Flex direction={"column"} my={"5"}>
           <Heading size={"4"}>Task #{task.id}</Heading>
