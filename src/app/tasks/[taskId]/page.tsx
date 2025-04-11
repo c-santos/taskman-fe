@@ -44,7 +44,7 @@ export default function TaskDetail() {
     updateTaskMutation.mutateAsync(
       {
         completed: status,
-        completed_at: new Date(),
+        completed_at: status === true ? new Date() : null,
       },
       {
         onSuccess: () =>
